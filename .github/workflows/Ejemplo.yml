@@ -1,0 +1,17 @@
+name: CI/CD Workflow  # Nombre del flujo de trabajo
+
+on: [push]  # Evento que activa el workflow, en este caso cada vez que se hace un push al repositorio
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Define el sistema operativo del runner
+
+    steps:
+      - name: Checkout code  # Descripción del paso
+        uses: actions/checkout@v2  # Utiliza la acción checkout para obtener el código
+
+      - name: Run tests  # Descripción del siguiente paso
+        run: echo "Running tests..."  # Comando de prueba, aquí ejecutaríamos los tests reales
+
+      - name: Deploy  # Paso de despliegue
+        run: echo "Deploying application..."  # Comando de despliegue, normalmente reemplazado con comandos de producción
