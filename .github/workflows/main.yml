@@ -1,0 +1,28 @@
+name: Crear Cliente
+
+on:
+  workflow_dispatch: # Este flujo se ejecuta manualmente
+    inputs:
+      cliente:
+        description: "Nombre del cliente a crear"
+        required: true
+      servicio:
+        description: "Servicio solicitado por el cliente"
+        required: true
+
+jobs:
+  notificar_creacion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Enviar notificación de creación de cliente
+        run: |
+          echo "Un nuevo cliente ha sido creado."
+          echo "Cliente: ${{ github.event.inputs.cliente }}"
+          echo "Servicio: ${{ github.event.inputs.servicio }}"
+          
+      - name: Notificar al equipo
+        run: |
+          echo "Notificando a los miembros del equipo:"
+          echo "- Carlos (Ejecutivo)"
+          echo "- Ana (Supervisor)"
