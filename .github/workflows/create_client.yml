@@ -1,0 +1,32 @@
+name: Crear nuevo cliente
+
+on:
+  workflow_dispatch: # Permite ejecutar manualmente la acción desde GitHub Actions
+
+jobs:
+  create-client:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Create New Client
+        env:
+          API_URL: ${{ secrets.API_URL }}       # URL de tu API para crear clientes
+          API_TOKEN: ${{ secrets.API_TOKEN }}   # Token de autorización para la API
+        run: |
+          curl -X POST "$API_URL/clientes" \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "Nuevo Cliente",
+              "email": "cliente@ejemplo.com",
+              "phone": "+521234567890"
+            }'
+  
