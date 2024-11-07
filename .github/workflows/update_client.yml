@@ -1,0 +1,32 @@
+name: Modificar datos de un cliente
+
+on:
+  workflow_dispatch: # Permite ejecutar manualmente la acción desde GitHub Actions
+
+jobs:
+  update-client:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Update Client Information
+        env:
+          API_URL: ${{ secrets.API_URL }}         # URL de tu API
+          API_TOKEN: ${{ secrets.API_TOKEN }}     # Token de autorización para la API
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}     # ID del cliente a modificar
+        run: |
+          curl -X PUT "$API_URL/clientes/$CLIENT_ID" \
+            -H "Authorization: Bearer $API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "Cliente Actualizado",
+              "email": "nuevoemail@ejemplo.com",
+              "phone": "+521234567891"
+            }'
